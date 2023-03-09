@@ -55,7 +55,7 @@ it("skips 'nullable' fields", function () {
     expect($errors)->toHaveCount(0);
 });
 
-it("throws errors as exceptions", function () {
+it('throws errors as exceptions', function () {
     $errors = Validator::validate([
         'name' => '',
     ], [
@@ -76,4 +76,3 @@ it("doesn't throw exceptions when there are no errors", function () {
 
     Validator::throwErrors($errors);
 });
-
