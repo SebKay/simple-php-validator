@@ -23,8 +23,8 @@
             "@clean",
             "composer install"
         ],
-        "lint:php": "./vendor/bin/pint --test",
-        "fix:php": "./vendor/bin/pint",
+        "lint": "./vendor/bin/pint --test",
+        "fix": "./vendor/bin/pint",
         "test": [
             "./vendor/bin/pest --parallel --processes=8 --stop-on-failure"
         ],
