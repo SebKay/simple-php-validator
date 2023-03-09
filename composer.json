@@ -26,7 +26,7 @@
         "lint": "./vendor/bin/pint --test",
         "fix": "./vendor/bin/pint",
         "test": [
-            "./vendor/bin/pest --parallel --processes=8 --stop-on-failure"
+            "./vendor/bin/pest --parallel --processes=8"
         ],
         "test:coverage": [
             "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --coverage --min=85 --processes=8 --stop-on-failure"

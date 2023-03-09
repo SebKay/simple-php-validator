@@ -22,14 +22,38 @@ it("validates 'email' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
-it("validates 'password' fields", function () {
+it("validates 'accepted' fields", function () {
     $errors = Validator::validate([
-        'password' => '1234',
+        'terms' => 'no',
     ], [
-        'password' => ['password'],
+        'terms' => ['accepted'],
     ]);
 
     expect($errors)->toHaveCount(1);
+
+    $errors = Validator::validate([
+        'terms' => 'yes',
+    ], [
+        'terms' => ['accepted'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+
+    $errors = Validator::validate([
+        'terms' => true,
+    ], [
+        'terms' => ['accepted'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+
+    $errors = Validator::validate([
+        'terms' => 1,
+    ], [
+        'terms' => ['accepted'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
 });
 
 it("validates 'same' fields", function () {
@@ -38,6 +62,16 @@ it("validates 'same' fields", function () {
         'password_confirmation' => '123456',
     ], [
         'password_confirmation' => ['same:password'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+});
+
+it("validates 'min' fields", function () {
+    $errors = Validator::validate([
+        'password' => '123',
+    ], [
+        'password' => ['min:4'],
     ]);
 
     expect($errors)->toHaveCount(1);
