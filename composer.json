@@ -30,6 +30,9 @@
         ],
         "test:coverage": [
             "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --coverage --min=85 --processes=8 --stop-on-failure"
+        ],
+        "clean": [
+            "git clean -xffd"
         ]
     },
     "config": {
