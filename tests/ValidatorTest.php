@@ -22,22 +22,22 @@ it("validates 'email' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
-it("validates 'password' fields", function () {
-    $errors = Validator::validate([
-        'password' => '1234',
-    ], [
-        'password' => ['password'],
-    ]);
-
-    expect($errors)->toHaveCount(1);
-});
-
 it("validates 'same' fields", function () {
     $errors = Validator::validate([
         'password' => '12345',
         'password_confirmation' => '123456',
     ], [
         'password_confirmation' => ['same:password'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+});
+
+it("validates 'min' fields", function () {
+    $errors = Validator::validate([
+        'password' => '123',
+    ], [
+        'password' => ['min:4'],
     ]);
 
     expect($errors)->toHaveCount(1);

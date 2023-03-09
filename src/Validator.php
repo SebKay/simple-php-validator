@@ -35,12 +35,24 @@ class Validator
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $errors[] = "{$fieldLabel} is not a valid email address.";
                 }
-            } elseif (\str_contains($rule, 'same')) {
+            } elseif (\str_contains($rule, 'same:')) {
                 $otherField = \str_replace('same:', '', $rule);
                 $otherValue = $data[$otherField] ?? null;
 
                 if ($value != $otherValue) {
                     $errors[] = "{$fieldLabel} must match {$otherField}.";
+                }
+            } elseif (\str_contains($rule, 'min:')) {
+                $min = \str_replace('min:', '', $rule);
+
+                if (\strlen($value) < $min) {
+                    $errors[] = "{$fieldLabel} must be at least {$min} characters.";
+                }
+            } elseif (\str_contains($rule, 'max:')) {
+                $max = \str_replace('max:', '', $rule);
+
+                if (\strlen($value) > $max) {
+                    $errors[] = "{$fieldLabel} must be at most {$max} characters.";
                 }
             }
         }
