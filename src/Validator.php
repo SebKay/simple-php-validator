@@ -35,6 +35,10 @@ class Validator
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $errors[] = "{$fieldLabel} is not a valid email address.";
                 }
+            } elseif ($rule == 'accepted') {
+                if ($value != 'on' && $value != 'yes' && $value !== true && $value !== 1) {
+                    $errors[] = "{$fieldLabel} must be accepted.";
+                }
             } elseif (\str_contains($rule, 'same:')) {
                 $otherField = \str_replace('same:', '', $rule);
                 $otherValue = $data[$otherField] ?? null;
