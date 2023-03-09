@@ -19,9 +19,8 @@ class Validator
 
     public static function validateField($data, $field, $value, $rules)
     {
-        $errors     = [];
+        $errors = [];
         $fieldLabel = \ucfirst(\str_replace('_', ' ', $field));
-
 
         foreach ($rules as $rule) {
             if (\in_array('nullable', $rules) && empty($value)) {
