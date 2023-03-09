@@ -1,0 +1,28 @@
+{
+    "name": "sebkay/simple-php-validator",
+    "authors": [
+        {
+            "name": "Seb Kay",
+            "email": "seb@sebkay.com",
+            "homepage": "https://sebkay.com/"
+        }
+    ],
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "SebKay\\SPV\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1"
+    },
+    "scripts": {
+        "build": [
+            "@clean",
+            "composer install"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
