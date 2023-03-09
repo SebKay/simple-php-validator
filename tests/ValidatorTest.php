@@ -2,7 +2,7 @@
 
 use SebKay\SPV\Validator;
 
-it("validates 'required' errors", function () {
+it("validates 'required' fields", function () {
     $errors = Validator::validate([
         'name' => '',
     ], [
@@ -12,7 +12,7 @@ it("validates 'required' errors", function () {
     expect($errors)->toHaveCount(1);
 });
 
-it("validates 'email' errors", function () {
+it("validates 'email' fields", function () {
     $errors = Validator::validate([
         'email' => 'test',
     ], [
@@ -22,7 +22,7 @@ it("validates 'email' errors", function () {
     expect($errors)->toHaveCount(1);
 });
 
-it("validates 'password' errors", function () {
+it("validates 'password' fields", function () {
     $errors = Validator::validate([
         'password' => '1234',
     ], [
@@ -32,7 +32,7 @@ it("validates 'password' errors", function () {
     expect($errors)->toHaveCount(1);
 });
 
-it("validates 'same' errors", function () {
+it("validates 'same' fields", function () {
     $errors = Validator::validate([
         'password' => '12345',
         'password_confirmation' => '123456',
@@ -41,4 +41,16 @@ it("validates 'same' errors", function () {
     ]);
 
     expect($errors)->toHaveCount(1);
+});
+
+it("skips 'nullable' fields", function () {
+    $errors = Validator::validate([
+        'name' => '',
+        'email' => 'test@test.com',
+    ], [
+        'name' => ['nullable'],
+        'email' => ['required'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
 });
