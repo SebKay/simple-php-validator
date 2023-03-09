@@ -35,10 +35,6 @@ class Validator
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $errors[] = "{$fieldLabel} is not a valid email address.";
                 }
-            } elseif ($rule == 'password') {
-                if (strlen($value) < 5) {
-                    $errors[] = "{$fieldLabel} must be at least 5 characters long.";
-                }
             } elseif (\str_contains($rule, 'same')) {
                 $otherField = \str_replace('same:', '', $rule);
                 $otherValue = $data[$otherField] ?? null;
