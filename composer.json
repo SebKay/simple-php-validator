@@ -23,7 +23,13 @@
             "composer install"
         ],
         "lint:php": "./vendor/bin/pint --test",
-        "fix:php": "./vendor/bin/pint"
+        "fix:php": "./vendor/bin/pint",
+        "test": [
+            "./vendor/bin/pest --parallel --processes=8 --stop-on-failure"
+        ],
+        "test:coverage": [
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --coverage --min=85 --processes=8 --stop-on-failure"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -32,6 +38,7 @@
         }
     },
     "require-dev": {
-        "pestphp/pest": "^1.22"
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-parallel": "^1.2"
     }
 }
