@@ -1,5 +1,6 @@
 # Files
 composer.lock
+.phpunit.result.cache
 
 # Directories
 vendor/
