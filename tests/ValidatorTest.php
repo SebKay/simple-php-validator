@@ -97,6 +97,16 @@ it("validates 'min' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
+it("validates 'max' fields", function () {
+    $errors = Validator::validate([
+        'password' => '123456',
+    ], [
+        'password' => ['max:4'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+});
+
 it("skips 'nullable' fields", function () {
     $errors = Validator::validate([
         'name' => '',
