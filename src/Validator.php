@@ -58,6 +58,12 @@ class Validator
                 if (\strlen($value) > $max) {
                     $errors[] = "{$fieldLabel} must be at most {$max} characters.";
                 }
+            } elseif (\str_contains($rule, 'required_without:')) {
+                $otherField = \str_replace('required_without:', '', $rule);
+
+                if (empty($value) && empty($data[$otherField])) {
+                    $errors[] = "{$fieldLabel} is required.";
+                }
             }
         }
 
