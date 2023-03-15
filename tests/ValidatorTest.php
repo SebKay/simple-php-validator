@@ -12,6 +12,20 @@ it("validates 'required' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
+it("validates 'required_without' fields", function () {
+    $errors = Validator::validate([
+        'name_1' => '',
+        'name_2' => '',
+    ], [
+        'name_1' => ['string'],
+        'name_2' => ['required_without:name_1', 'string'],
+    ]);
+
+    ray($errors);
+
+    expect($errors)->toHaveCount(1);
+});
+
 it("validates 'email' fields", function () {
     $errors = Validator::validate([
         'email' => 'test',
