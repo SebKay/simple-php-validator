@@ -12,6 +12,26 @@ it("validates 'required' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
+it("validates 'required_without' fields", function () {
+    $errors = Validator::validate([
+        'name_1' => '',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_without:name_1'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+
+    $errors = Validator::validate([
+        'name_1' => 'Jim',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_without:name_1'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+});
+
 it("validates 'email' fields", function () {
     $errors = Validator::validate([
         'email' => 'test',
@@ -72,6 +92,16 @@ it("validates 'min' fields", function () {
         'password' => '123',
     ], [
         'password' => ['min:4'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+});
+
+it("validates 'max' fields", function () {
+    $errors = Validator::validate([
+        'password' => '123456',
+    ], [
+        'password' => ['max:4'],
     ]);
 
     expect($errors)->toHaveCount(1);
