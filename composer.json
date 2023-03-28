@@ -15,11 +15,11 @@
     },
     "require": {
         "php": "^8.1",
-        "laravel/pint": "^1.6",
+        "laravel/pint": "^1.7",
         "spatie/ray": "^1.37"
     },
     "require-dev": {
-        "pestphp/pest": "^2.0"
+        "pestphp/pest": "^2.3"
     },
     "scripts": {
         "build": [
