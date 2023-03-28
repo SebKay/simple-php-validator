@@ -18,6 +18,9 @@
         "laravel/pint": "^1.6",
         "spatie/ray": "^1.37"
     },
+    "require-dev": {
+        "pestphp/pest": "^2.0"
+    },
     "scripts": {
         "build": [
             "@clean",
@@ -40,9 +43,5 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
-    },
-    "require-dev": {
-        "pestphp/pest": "^1.22",
-        "pestphp/pest-plugin-parallel": "^1.2"
     }
 }
