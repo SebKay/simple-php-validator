@@ -29,73 +29,50 @@ class Validator
 
             if ($rule == 'required') {
                 if (empty($value)) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} is required.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
             } elseif ($rule == 'email') {
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} is not a valid email address.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is not a valid email address.");
                 }
             } elseif ($rule == 'accepted') {
                 if ($value != 'on' && $value != 'yes' && $value !== true && $value !== 1) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} must be accepted.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be accepted.");
                 }
             } elseif (\str_contains($rule, 'same:')) {
                 $otherField = \str_replace('same:', '', $rule);
                 $otherValue = $data[$otherField] ?? null;
 
                 if ($value != $otherValue) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} must match {$otherField}.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must match {$otherField}.");
                 }
             } elseif (\str_contains($rule, 'min:')) {
                 $min = \str_replace('min:', '', $rule);
 
                 if (\strlen($value) < $min) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} must be at least {$min} characters.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be at least {$min} characters.");
                 }
             } elseif (\str_contains($rule, 'max:')) {
                 $max = \str_replace('max:', '', $rule);
 
                 if (\strlen($value) > $max) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} must be at most {$max} characters.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be at most {$max} characters.");
                 }
             } elseif (\str_contains($rule, 'required_without:')) {
                 $otherField = \str_replace('required_without:', '', $rule);
 
                 if (empty($value) && empty($data[$otherField])) {
-                    if (isset($messages[$field][$rule])) {
-                        $errors[$rule] = $messages[$field][$rule];
-                    } else {
-                        $errors[$rule] = "{$fieldLabel} is required.";
-                    }
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
             }
         }
 
         return $errors;
+    }
+
+    protected static function validationMessage($messages, $field, $rule, $default)
+    {
+        return $messages[$field][$rule] ?? $default;
     }
 
     public static function throwErrors($errors)

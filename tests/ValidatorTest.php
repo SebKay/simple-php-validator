@@ -141,7 +141,7 @@ it("doesn't throw exceptions when there are no errors", function () {
     Validator::throwErrors($errors);
 });
 
-it("keys the validation messages with the rule", function () {
+it('keys the validation messages with the rule', function () {
     $errors = Validator::validate([
         'name' => '',
     ], [
@@ -152,7 +152,7 @@ it("keys the validation messages with the rule", function () {
     expect($errors['name']['required'])->toBe('Name is required.');
 });
 
-it("uses user provided validation messages", function () {
+it('uses user provided validation messages', function () {
     $errors = Validator::validate([
         'name' => '',
         'password' => '123456',
