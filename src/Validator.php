@@ -31,8 +31,8 @@ class Validator
                 if (empty($value)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
-            } elseif (\str_contains($rule, 'required_if:')) {
-                $ruleValue = \str_replace('required_if:', '', $rule);
+            } elseif (\str_contains($rule, 'required_with:')) {
+                $ruleValue = \str_replace('required_with:', '', $rule);
                 $otherField = \explode(',', $ruleValue)[0];
                 $otherFieldValue = \explode(',', $ruleValue)[1] ?? null;
 
