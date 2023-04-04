@@ -38,7 +38,7 @@ class Validator
 
                 if (empty($value) && $data[$otherField] == $otherFieldValue) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField} when the value is {$otherFieldValue}.");
-                }else if (empty($value) && ! empty($data[$otherField]) && empty($otherFieldValue)) {
+                } elseif (empty($value) && ! empty($data[$otherField]) && empty($otherFieldValue)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField}.");
                 }
             } elseif (\str_contains($rule, 'required_without:')) {
