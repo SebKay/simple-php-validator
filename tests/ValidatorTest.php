@@ -17,6 +17,15 @@ it("validates 'required_if' fields", function () {
         'name_1' => 'Jim',
         'name_2' => '',
     ], [
+        'name_2' => ['required_if:name_1'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+
+    $errors = Validator::validate([
+        'name_1' => 'Jim',
+        'name_2' => '',
+    ], [
         'name_2' => ['required_if:name_1,Jim'],
     ]);
 
@@ -28,6 +37,17 @@ it("validates 'required_if' fields", function () {
     ], [
         'name_2' => ['required_if:name_1,Jim'],
     ]);
+
+    expect($errors)->toHaveCount(0);
+
+    $errors = Validator::validate([
+        'name_1' => 'Bob',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_if:name_1,Jim'],
+    ]);
+
+    ray($errors);
 
     expect($errors)->toHaveCount(0);
 });

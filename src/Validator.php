@@ -32,11 +32,14 @@ class Validator
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
             } elseif (\str_contains($rule, 'required_if:')) {
-                $otherField = \str_replace('required_if:', '', $rule);
-                $otherField = \explode(',', $otherField)[0];
+                $ruleValue = \str_replace('required_if:', '', $rule);
+                $otherField = \explode(',', $ruleValue)[0];
+                $otherFieldValue = \explode(',', $ruleValue)[1] ?? null;
 
-                if (empty($value) && ! empty($data[$otherField])) {
-                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
+                if (empty($value) && $data[$otherField] == $otherFieldValue) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField} when the value is {$otherFieldValue}.");
+                }else if (empty($value) && ! empty($data[$otherField]) && empty($otherFieldValue)) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField}.");
                 }
             } elseif (\str_contains($rule, 'required_without:')) {
                 $otherField = \str_replace('required_without:', '', $rule);
