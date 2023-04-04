@@ -31,6 +31,19 @@ class Validator
                 if (empty($value)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
+            } elseif (\str_contains($rule, 'required_if:')) {
+                $otherField = \str_replace('required_if:', '', $rule);
+                $otherField = \explode(',', $otherField)[0];
+
+                if (empty($value) && ! empty($data[$otherField])) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
+                }
+            } elseif (\str_contains($rule, 'required_without:')) {
+                $otherField = \str_replace('required_without:', '', $rule);
+
+                if (empty($value) && empty($data[$otherField])) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
+                }
             } elseif ($rule == 'email') {
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is not a valid email address.");
@@ -57,12 +70,6 @@ class Validator
 
                 if (\strlen($value) > $max) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be at most {$max} characters.");
-                }
-            } elseif (\str_contains($rule, 'required_without:')) {
-                $otherField = \str_replace('required_without:', '', $rule);
-
-                if (empty($value) && empty($data[$otherField])) {
-                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
             }
         }
