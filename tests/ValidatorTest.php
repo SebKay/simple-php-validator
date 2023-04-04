@@ -47,8 +47,6 @@ it("validates 'required_with' fields", function () {
         'name_2' => ['required_with:name_1,Jim'],
     ]);
 
-    ray($errors);
-
     expect($errors)->toHaveCount(0);
 });
 
