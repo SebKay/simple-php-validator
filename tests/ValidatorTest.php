@@ -12,6 +12,44 @@ it("validates 'required' fields", function () {
     expect($errors)->toHaveCount(1);
 });
 
+it("validates 'required_with' fields", function () {
+    $errors = Validator::validate([
+        'name_1' => 'Jim',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_with:name_1'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+
+    $errors = Validator::validate([
+        'name_1' => 'Jim',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_with:name_1,Jim'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+
+    $errors = Validator::validate([
+        'name_1' => 'Jim',
+        'name_2' => 'Bob',
+    ], [
+        'name_2' => ['required_with:name_1,Jim'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+
+    $errors = Validator::validate([
+        'name_1' => 'Bob',
+        'name_2' => '',
+    ], [
+        'name_2' => ['required_with:name_1,Jim'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+});
+
 it("validates 'required_without' fields", function () {
     $errors = Validator::validate([
         'name_1' => '',

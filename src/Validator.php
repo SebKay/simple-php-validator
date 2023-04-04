@@ -31,6 +31,22 @@ class Validator
                 if (empty($value)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
+            } elseif (\str_contains($rule, 'required_with:')) {
+                $ruleValue = \str_replace('required_with:', '', $rule);
+                $otherField = \explode(',', $ruleValue)[0];
+                $otherFieldValue = \explode(',', $ruleValue)[1] ?? null;
+
+                if (empty($value) && $data[$otherField] == $otherFieldValue) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField} when the value is {$otherFieldValue}.");
+                } elseif (empty($value) && ! empty($data[$otherField]) && empty($otherFieldValue)) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required with {$otherField}.");
+                }
+            } elseif (\str_contains($rule, 'required_without:')) {
+                $otherField = \str_replace('required_without:', '', $rule);
+
+                if (empty($value) && empty($data[$otherField])) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
+                }
             } elseif ($rule == 'email') {
                 if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is not a valid email address.");
@@ -57,12 +73,6 @@ class Validator
 
                 if (\strlen($value) > $max) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be at most {$max} characters.");
-                }
-            } elseif (\str_contains($rule, 'required_without:')) {
-                $otherField = \str_replace('required_without:', '', $rule);
-
-                if (empty($value) && empty($data[$otherField])) {
-                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} is required.");
                 }
             }
         }
