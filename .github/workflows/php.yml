@@ -10,17 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.0
-
       - name: Get Composer dependencies
         id: cache-vendor
         uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
 
       - name: Install Composer dependencies
         if: steps.cache-vendor.outputs.cache-hit != 'true'
@@ -33,6 +33,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Get Composer dependencies
+        id: cache-vendor
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
 
       - name: Check for dependencies
         if: steps.get-vendor-cache.outputs.cache-hit != 'true'
@@ -59,6 +66,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Get Composer dependencies
+        id: cache-vendor
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
 
       - name: Check for dependencies
         if: steps.get-vendor-cache.outputs.cache-hit != 'true'
