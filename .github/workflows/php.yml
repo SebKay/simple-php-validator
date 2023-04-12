@@ -18,6 +18,7 @@ jobs:
           key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
 
       - name: Setup PHP
+        if: steps.cache-vendor.outputs.cache-hit != 'true'
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
