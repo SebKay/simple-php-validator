@@ -36,15 +36,15 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
 
-      - name: Install Composer dependencies
-        if: steps.cache-vendor.outputs.cache-hit != 'true'
-        run: build
-
       - name: Setup PHP
         if: steps.cache-vendor.outputs.cache-hit != 'true'
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
+
+      - name: Install Composer dependencies
+        if: steps.cache-vendor.outputs.cache-hit != 'true'
+        run: build
 
       - name: Lint against Laravel code style
         run: composer lint
@@ -68,15 +68,15 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-vendor-dev-${{ hashFiles('**/composer.lock') }}
 
-      - name: Install Composer dependencies
-        if: steps.cache-vendor.outputs.cache-hit != 'true'
-        run: build
-
       - name: Setup PHP
         if: steps.cache-vendor.outputs.cache-hit != 'true'
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
+
+      - name: Install Composer dependencies
+        if: steps.cache-vendor.outputs.cache-hit != 'true'
+        run: build
 
       - name: Run tests
         run: composer test:coverage
