@@ -19,7 +19,8 @@
         "spatie/ray": "^1.37"
     },
     "require-dev": {
-        "pestphp/pest": "^1.22"
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-parallel": "^1.2"
     },
     "scripts": {
         "build": [
