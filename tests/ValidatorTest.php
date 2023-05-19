@@ -143,6 +143,7 @@ it("validates 'max' fields", function () {
     ]);
 
     expect($errors)->toHaveCount(1);
+    expect($errors['password']['max:4'])->toBe('Password must be at most 4 characters.');
 });
 
 it("skips 'nullable' fields", function () {
@@ -155,6 +156,17 @@ it("skips 'nullable' fields", function () {
     ]);
 
     expect($errors)->toHaveCount(0);
+});
+
+it("validates 'strong_password' fields", function () {
+    $errors = Validator::validate([
+        'password' => '12345',
+    ], [
+        'password' => ['strong_password'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+    expect($errors['password']['strong_password'])->toBe('Password must contain at least one uppercase letter, one lowercase letter, and one number.');
 });
 
 it('throws errors as exceptions', function () {
