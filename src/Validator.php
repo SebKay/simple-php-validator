@@ -74,6 +74,10 @@ class Validator
                 if (\strlen($value) > $max) {
                     $errors[$rule] = self::validationMessage($messages, $field, $rule, "{$fieldLabel} must be at most {$max} characters.");
                 }
+            } elseif ($rule == 'strong_password') {
+                if (preg_match('/[A-Z]/', $value) == 0 || preg_match('/[a-z]/', $value) == 0 || preg_match('/[0-9]/', $value) == 0) {
+                    $errors[$rule] = self::validationMessage($messages, $field, $rule, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
+                }
             }
         }
 

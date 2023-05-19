@@ -160,13 +160,42 @@ it("skips 'nullable' fields", function () {
 
 it("validates 'strong_password' fields", function () {
     $errors = Validator::validate([
-        'password' => '12345',
+        'password' => 'test',
     ], [
         'password' => ['strong_password'],
     ]);
 
     expect($errors)->toHaveCount(1);
     expect($errors['password']['strong_password'])->toBe('Password must contain at least one uppercase letter, one lowercase letter, and one number.');
+
+    $errors = Validator::validate([
+        'password' => 'TEST',
+    ], [
+        'password' => ['strong_password'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+    expect($errors)->toHaveKey('password');
+    expect($errors['password']['strong_password'])->toBe('Password must contain at least one uppercase letter, one lowercase letter, and one number.');
+
+    $errors = Validator::validate([
+        'password' => '12345',
+    ], [
+        'password' => ['strong_password'],
+    ]);
+
+    expect($errors)->toHaveCount(1);
+    expect($errors)->toHaveKey('password');
+    expect($errors['password']['strong_password'])->toBe('Password must contain at least one uppercase letter, one lowercase letter, and one number.');
+
+    $errors = Validator::validate([
+        'password' => 'testTest1',
+    ], [
+        'password' => ['strong_password'],
+    ]);
+
+    expect($errors)->toHaveCount(0);
+    expect($errors)->not->toHaveKey('password');
 });
 
 it('throws errors as exceptions', function () {
