@@ -1,6 +1,6 @@
 <?php
 
-use SebKay\SPV\ValidationException;
+use SebKay\SPV\Exceptions\ValidationException;
 use SebKay\SPV\Validator;
 
 it("validates 'required' fields", function () {

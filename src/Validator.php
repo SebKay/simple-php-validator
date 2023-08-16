@@ -2,6 +2,8 @@
 
 namespace SebKay\SPV;
 
+use SebKay\SPV\Exceptions\ValidationException;
+
 class Validator
 {
     public static function validate(array $data, array $rules, ?array $messages = [])

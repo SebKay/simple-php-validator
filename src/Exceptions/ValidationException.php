@@ -1,6 +1,6 @@
 <?php
 
-namespace SebKay\SPV;
+namespace SebKay\SPV\Exceptions;
 
 class ValidationException extends \InvalidArgumentException
 {
