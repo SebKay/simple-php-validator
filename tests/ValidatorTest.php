@@ -1,5 +1,6 @@
 <?php
 
+use SebKay\SPV\ValidationException;
 use SebKay\SPV\Validator;
 
 it("validates 'required' fields", function () {
@@ -206,7 +207,7 @@ it('throws errors as exceptions', function () {
     ]);
 
     Validator::throwErrors($errors);
-})->throws(\InvalidArgumentException::class);
+})->throws(ValidationException::class);
 
 it("doesn't throw exceptions when there are no errors", function () {
     $errors = Validator::validate([
