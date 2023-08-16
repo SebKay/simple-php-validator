@@ -100,6 +100,6 @@ class Validator
             $message = \array_values($firstErrorItem)[0];
         }
 
-        throw new \InvalidArgumentException($message);
+        throw new ValidationException($message);
     }
 }
